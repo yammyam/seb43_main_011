@@ -134,7 +134,7 @@ const CocktailEdit = () => {
   }
 
   interface NewImage {
-    id: number;
+    id: string | undefined;
     formData: FormData;
   }
   const postCustomRecipe = async (data: NewRecipe) => {
@@ -175,21 +175,19 @@ const CocktailEdit = () => {
       recipe: editRecipeStep,
       ingredient: totalData,
     };
-
     try {
-      const { data: recipeId } = await recipeMutation.mutateAsync(
-        customRecipeCreateDto,
-      );
+      await recipeMutation.mutateAsync(customRecipeCreateDto);
+      if (selectedImage) {
+        const formData = new FormData();
+        formData.append("image", selectedImage);
 
-      const formData = new FormData();
-      formData.append("image", selectedImage || null);
-      const imageInput = {
-        id: recipeId,
-        formData: formData,
-      };
+        const imageInput = {
+          id: id,
+          formData: formData,
+        };
 
-      await imageMutation.mutateAsync(imageInput);
-
+        await imageMutation.mutateAsync(imageInput);
+      }
       navigate("/custom");
     } catch (error) {
       console.error("PATCH 요청 에러:", error);

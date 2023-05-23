@@ -170,14 +170,14 @@ export default function EditMyInfo({ infoData, ToggleEditHandle }: EditProps) {
         <Input
           type="text"
           placeholder="닉네임을 입력해주세요."
-          value={nickname}
+          value={nickname || ""}
           onChange={handleNicknameChange}
         />
         <Title>Status Message</Title>
         <Input
           type="text"
           placeholder="상태메세지를 입력해주세요."
-          value={statusMessage}
+          value={statusMessage || ""}
           onChange={handleStatusMessageChange}
         />
         <Button onClick={handleSubmit}>save</Button>
