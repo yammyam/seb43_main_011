@@ -182,8 +182,7 @@ const CocktailEdit = () => {
       );
 
       const formData = new FormData();
-      formData.append("image", selectedImage); //이게널이라고 ?
-      console.log(formData);
+      formData.append("image", selectedImage || null);
       const imageInput = {
         id: recipeId,
         formData: formData,
@@ -195,22 +194,6 @@ const CocktailEdit = () => {
     } catch (error) {
       console.error("PATCH 요청 에러:", error);
     }
-    // recipeMutation.mutate(customRecipeCreateDto, {
-    //   onSuccess: (data) => {
-    //     const formData: FormData = new FormData();
-    //     formData.append("image", selectedImage);
-    //     const input = {
-    //       id: data,
-    //       formData: formData,
-    //     };
-    //     imageMutation.mutate(input, {
-    //       onSuccess: (data) => {
-    //         console.log(data);
-    //         navigate("/custom");
-    //       },
-    //     });
-    //   },
-    // });
   };
 
   return (
@@ -373,6 +356,7 @@ const Container = styled.div`
   min-height: 100vh;
   display: flex;
   justify-content: center;
+  align-items: center;
 `;
 
 const IngredientLabel = styled.div`

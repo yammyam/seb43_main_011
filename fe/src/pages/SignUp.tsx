@@ -50,16 +50,11 @@ const Signup = () => {
   }
 
   const postUserData = async (userData: UserData) => {
-    const response = await axios.post(
-      "http://ec2-15-165-108-106.ap-northeast-2.compute.amazonaws.com:8080/signup",
-      userData,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Authorization Key",
-        },
+    const response = await axios.post("/signup", userData, {
+      headers: {
+        "Content-Type": "application/json",
       },
-    );
+    });
     return response.data;
   };
 
@@ -73,12 +68,8 @@ const Signup = () => {
     };
 
     mutation.mutate(userData, {
-      onSuccess: (data) => {
-        console.log(data);
+      onSuccess: () => {
         navigate("/signin");
-      },
-      onError: (error) => {
-        console.error(error);
       },
     });
   };
@@ -88,8 +79,6 @@ const Signup = () => {
   };
   return (
     <Container>
-      {/* <BlankFrom></BlankFrom> */}
-      {/* 오른쪽으로 입력폼이 오려면 위의 주석 해제 */}
       <SignupForm>
         <Link to="/">
           <Logo src={logo} alt="logo"></Logo>
