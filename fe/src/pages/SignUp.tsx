@@ -63,20 +63,7 @@ const Signup = () => {
     return response.data;
   };
 
-  const mutation = useMutation(postUserData, {
-    onMutate: (variable) => {
-      console.log("onMutate", variable);
-    },
-    onError: (error) => {
-      console.log("뮤테이션 에러", error);
-    }, //variable, context
-    onSuccess: (data, variables, context) => {
-      console.log("뮤테이션 성공", data, variables, context);
-    },
-    onSettled: () => {
-      console.log("뮤테이션 끝");
-    },
-  });
+  const mutation = useMutation(postUserData);
 
   const handleSubmit = () => {
     const userData = {
@@ -88,7 +75,7 @@ const Signup = () => {
     mutation.mutate(userData, {
       onSuccess: (data) => {
         console.log(data);
-        navigate("signin");
+        navigate("/signin");
       },
       onError: (error) => {
         console.error(error);

@@ -108,7 +108,7 @@ const CocktailEdit = () => {
     }
   };
 
-  const handleUploadImage = () => {
+  const onDialog = () => {
     // 파일 선택(input) 요소를 클릭하여 이미지 선택 다이얼로그 표시
     if (inputFileRef.current !== undefined) {
       inputFileRef.current?.click();
@@ -117,8 +117,10 @@ const CocktailEdit = () => {
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]; // 선택한 이미지 파일
+    console.log(file);
     if (file) {
-      handleUploadImage();
+      onDialog(); //다이얼로그 띄우고
+      console.log(URL.createObjectURL(file));
       setEditPreviewImage(URL.createObjectURL(file)); // 미리보기 이미지 URL 설정
       setSelectedImage(file);
     }
@@ -136,28 +138,24 @@ const CocktailEdit = () => {
     formData: FormData;
   }
   const postCustomRecipe = async (data: NewRecipe) => {
-    try {
-      const content = JSON.stringify(data);
+    const content = JSON.stringify(data);
 
-      const response = await tokenInstance.patch(
-        `/custom/update/content/${id}`,
-        content,
-      );
+    const response = await tokenInstance.patch(
+      `/custom/update/content/${id}`,
+      content,
+    );
 
-      return response.data;
-    } catch {}
+    return response.data;
   };
 
   const postCustomImage = async (data: NewImage) => {
-    try {
-      const response = await tokenInstance.post(
-        `/custom/submit/image/${data.id}`,
-        data.formData,
-        { headers: { "Content-Type": "multipart/form-data" } },
-      );
+    const response = await tokenInstance.post(
+      `/custom/submit/image/${data.id}`,
+      data.formData,
+      { headers: { "Content-Type": "multipart/form-data" } },
+    );
 
-      return response.data;
-    } catch {}
+    return response.data;
   };
 
   const recipeMutation = useMutation(postCustomRecipe);
@@ -184,7 +182,8 @@ const CocktailEdit = () => {
       );
 
       const formData = new FormData();
-      formData.append("image", selectedImage);
+      formData.append("image", selectedImage); //이게널이라고 ?
+      console.log(formData);
       const imageInput = {
         id: recipeId,
         formData: formData,
@@ -218,7 +217,7 @@ const CocktailEdit = () => {
     <Container>
       <EditForm>
         <TopInfo>
-          <UploadImgButton onClick={handleUploadImage}>
+          <UploadImgButton onClick={onDialog}>
             {data ? (
               <PreviewImg src={EditpreviewImage} alt="Preview" />
             ) : (

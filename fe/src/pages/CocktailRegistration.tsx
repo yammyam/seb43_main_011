@@ -25,7 +25,7 @@ const CocktailRegistration = () => {
     name: false,
     description: false,
     recipeStep: false,
-    selectLines: [{ id: 0, stuff: false, amount: false, selectOption: false }],
+    selectLines: [{ id: 0, stuff: false, amount: false, selectOption: false }], //이거 컴포넌트?
   });
   interface NewRecipe {
     name: string;
@@ -89,7 +89,7 @@ const CocktailRegistration = () => {
     setSelectLines(newSelectLines);
 
     if (isCurrentSelection) {
-      setSelectLineId(-1);
+      setSelectLineId(newSelectLines.length > 0 ? newSelectLines[0].id : -1);
     }
   };
   const handleSubmitData = async () => {
